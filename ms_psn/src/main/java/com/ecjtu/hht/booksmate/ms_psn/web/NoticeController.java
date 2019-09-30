@@ -33,9 +33,9 @@ public class NoticeController {
      * @param request
      * @return
      */
-    @GetMapping("/person/getAllNotice")
+    @GetMapping("/mapper/person/getAllNotice")
     public ModelAndView getAllNotice(HttpServletRequest request, ModelAndView modelAndView){
-        Person person=(Person)request.getSession().getAttribute("person");
+        Person person=(Person)request.getSession().getAttribute("mapper/person");
         Map<String, List<Notice>> map=  noticeService.getAllNotice(person.getId());
         modelAndView.addObject("noticeMap",map);
         modelAndView.setViewName("front/noticeList");
@@ -47,7 +47,7 @@ public class NoticeController {
      * @param id
      * @return
      */
-    @GetMapping("/person/ignoreNotice")
+    @GetMapping("/mapper/person/ignoreNotice")
     public BookResult ignoreNotice(@RequestParam("id") Integer id){
         BookResult bookResult= noticeService.ignoreNotice(id);
         return bookResult;
@@ -56,9 +56,9 @@ public class NoticeController {
      * 标记所有通知为已读
      *   @param  noticeType 通知类型
      */
-    @GetMapping("/person/markAllReaded")
+    @GetMapping("/mapper/person/markAllReaded")
     public BookResult markAllReaded(@RequestParam("noticeType")Integer noticeType, HttpServletRequest request){
-        Person person=(Person)request.getSession().getAttribute("person");
+        Person person=(Person)request.getSession().getAttribute("mapper/person");
         BookResult bookResult=noticeService.markAllReadedNotice(noticeType,person.getId());
         return bookResult;
     }

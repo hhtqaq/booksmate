@@ -1,5 +1,6 @@
 package com.ecjtu.hht.booksmate.ms_oauth;
 
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

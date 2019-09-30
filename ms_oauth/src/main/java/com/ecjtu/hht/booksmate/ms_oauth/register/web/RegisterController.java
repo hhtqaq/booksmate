@@ -1,8 +1,8 @@
 package com.ecjtu.hht.booksmate.ms_oauth.register.web;
 
-import com.ecjtu.hht.booksmate.common.util.BookResult;
-import com.ecjtu.hht.booksmate.msoauth.login.vo.LoginForm;
-import com.ecjtu.hht.booksmate.msoauth.register.service.RegisterService;
+import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
+import com.ecjtu.hht.booksmate.ms_oauth.login.vo.LoginForm;
+import com.ecjtu.hht.booksmate.ms_oauth.register.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.DynamicMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--
+        <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    -->
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, content, create_psn AS createPsn, create_time AS createTime, dyn_status AS dynStatus,
+        permission,imgInfo,awardCount,title
+    </sql>
+    <select id="getAllDynamic" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.Dynamic">
+        select <include refid="Base_Column_List"></include> from dynamic where 1=1
+        <if test="psnId!=null">
+            and create_psn=#{psnId}
+        </if>
+        <if test="status!=null">
+            and dyn_status=#{status}
+        </if>
+        order by create_time desc
+    </select>
+    <select id="getAllFollowDynamic" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.Dynamic">
+        select <include refid="Base_Column_List"></include> from dynamic where create_psn in
+        <foreach collection="psnIds" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        and dyn_status=1
+        order by create_time desc
+    </select>
+    <select id="selectByIdForUpdate" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.Dynamic">
+        select <include refid="Base_Column_List"></include> from dynamic where id =#{dynId} for update
+    </select>
+</mapper>

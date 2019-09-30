@@ -26,7 +26,7 @@ public class RecentAccessController {
     private IRecentAccessService recentAccessService;
 
     //获取最近访客记录  最多显示四条
-    @GetMapping("/person/ajaxGetRecentAccess/{psnId}")
+    @GetMapping("/mapper/person/ajaxGetRecentAccess/{psnId}")
     public ModelAndView ajaxGetRecentAccess(@PathVariable("psnId") Integer psnId, ModelAndView modelAndView) {
         List<Map<String, Object>> recentMap = recentAccessService.getRecentAccess(psnId);
         modelAndView.addObject("recentMap", recentMap);

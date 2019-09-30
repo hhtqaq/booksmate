@@ -31,11 +31,8 @@ import java.util.concurrent.TimeUnit;
 public class RegisterServiceImpl implements RegisterService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
     private MailService mailService;
-    @Autowired
     private IMailInitdataService mailInitdataService;
-    @Autowired
     private IPersonService personService;
     @Value("${avatorRoot}")
     private String avatorRoot;
@@ -118,8 +115,11 @@ public class RegisterServiceImpl implements RegisterService {
             person.setStatus(0);
             person.setPsnName(form.getName());
             //保存用户
-            boolean insert = personService.insert(person);
+            // boolean isInsert = personService.insert(person);
             //发送注册成功邮件
+            // if (!isInsert){
+            //    return BookResult.build(400, "注册失败");
+            // }
             sendRegisterSuccessMail(person);
             //存取session
             request.getSession().setAttribute("person", person);
@@ -150,7 +150,7 @@ public class RegisterServiceImpl implements RegisterService {
         mailInitdata.setSubject("图书之友-注册成功");
         mailInitdataService.saveMailInitDate(mailInitdata);
         //保存内容到redis中
-        redisTemplate.opsForValue().set(RedisConst.MAIL_PREFIX+ mailInitdata.getId(), content);
+        redisTemplate.opsForValue().set(RedisConst.MAIL_PREFIX + mailInitdata.getId(), content);
     }
 
     /**
@@ -159,14 +159,14 @@ public class RegisterServiceImpl implements RegisterService {
      * @return
      */
     private Integer saveRedis(String receive) {
-        Integer registerCode = (Integer) redisTemplate.opsForValue().get(RedisConst.REGISTER_CODE+ receive);
+        Integer registerCode = (Integer) redisTemplate.opsForValue().get(RedisConst.REGISTER_CODE + receive);
         //如果为空
         if (registerCode == null) {
             //重新生成
             registerCode = CodeGeneratorUtil.generatorCode();
             //放到redis中 并设置过期时间为1分钟
             redisTemplate.opsForValue().set(RedisConst.REGISTER_CODE + receive, registerCode);
-            redisTemplate.expire(RedisConst.REGISTER_CODE+ receive, 1, TimeUnit.MINUTES);
+            redisTemplate.expire(RedisConst.REGISTER_CODE + receive, 1, TimeUnit.MINUTES);
         }
         return registerCode;
     }

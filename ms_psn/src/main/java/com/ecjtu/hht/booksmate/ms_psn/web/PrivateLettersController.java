@@ -39,7 +39,7 @@ public class PrivateLettersController {
      */
     @GetMapping("/psn/message/show")
     public ModelAndView showMessage(ModelAndView modelAndView, HttpServletRequest request) {
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = (Person) request.getSession().getAttribute("mapper/person");
         //获取所有的聊天人员列表
         List<Map<String, Object>> maps = msgRelationService.getAllChatPsnList(person.getId());
         modelAndView.addObject("chatMaps", maps);
@@ -57,7 +57,7 @@ public class PrivateLettersController {
      */
     @GetMapping("/psn/message/showMsgList")
     public ModelAndView showMsgList(@RequestParam("frdId") Integer frdId, HttpServletRequest request, ModelAndView modelAndView) {
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = (Person) request.getSession().getAttribute("mapper/person");
         List<PrivateLetters> letters = privateLettersService.getMsgListByFrdId(person.getId(), frdId);
         modelAndView.setViewName("front/message_list");
         Person friend = personService.selectById(frdId);

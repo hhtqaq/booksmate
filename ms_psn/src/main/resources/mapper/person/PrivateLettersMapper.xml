@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.PrivateLettersMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--
+        <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    -->
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sender_psn_id AS senderPsnId, receive_psn_id AS receivePsnId, user_id AS userId, friend_id AS friendId, status
+  ,send_date as sendDate , content
+    </sql>
+    <select id="getMsgListByFrdId" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.PrivateLetters">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from private_letters t where (t.receive_psn_id=#{psnId} and t.sender_psn_id=#{frdId}) or
+        (t.receive_psn_id=#{frdId} and t.sender_psn_id=#{psnId})
+        ORDER BY t.send_date;
+    </select>
+</mapper>

@@ -36,7 +36,7 @@ public class FollowersController {
      * @param psnId
      * @return
      */
-    @GetMapping("/person/ajaxCheckIsFollow")
+    @GetMapping("/mapper/person/ajaxCheckIsFollow")
     public BookResult ajaxCheckIsFollow(String frdId, String psnId){
         boolean isFollow=followersService.checkIsFollow(psnId,frdId);
         return BookResult.ok(isFollow);
@@ -50,7 +50,7 @@ public class FollowersController {
      */
     @GetMapping("/psn/followers/show")
     public ModelAndView showFollowers(ModelAndView modelAndView, HttpServletRequest request){
-        Person person=(Person)request.getSession().getAttribute("person");
+        Person person=(Person)request.getSession().getAttribute("mapper/person");
         List<Person> personList=followersService.showAllFollowers(person.getId());
         modelAndView.setViewName("front/followers");
         modelAndView.addObject("persons",personList);
@@ -62,7 +62,7 @@ public class FollowersController {
      * @param followers
      * @return
      */
-    @GetMapping("/person/ajaxFollowPsn")
+    @GetMapping("/mapper/person/ajaxFollowPsn")
     public BookResult ajaxFollowPsn(Followers followers){
         BookResult result= followersService.followPsn(followers);
         return result;
@@ -74,7 +74,7 @@ public class FollowersController {
      * @param noticeId   通知id
      * @return
      */
-    @GetMapping("/person/ajaxFollowPsnEach")
+    @GetMapping("/mapper/person/ajaxFollowPsnEach")
     public BookResult ajaxFollowPsnEach(Followers followers,Integer noticeId){
         BookResult result= followersService.followPsnEach(followers,noticeId);
         return result;
@@ -86,7 +86,7 @@ public class FollowersController {
      */
     @GetMapping("/psn/followering/show")
     public ModelAndView showFollowering(ModelAndView modelAndView, HttpServletRequest request){
-        Person person=(Person)request.getSession().getAttribute("person");
+        Person person=(Person)request.getSession().getAttribute("mapper/person");
         List<Person> followeringList=followersService.showAllFollowering(person.getId());
         modelAndView.addObject("followerings", followeringList);
         modelAndView.setViewName("front/followering");
@@ -98,7 +98,7 @@ public class FollowersController {
      * @param followers
      * @return
      */
-    @GetMapping("/person/ajaxCancleFollow")
+    @GetMapping("/mapper/person/ajaxCancleFollow")
     public BookResult ajaxCancleFollow(Followers followers){
         BookResult bookResult= followersService.cancleFollow(followers);
         return bookResult;

@@ -1,4 +1,4 @@
-package com.ecjtu.hht.booksmate.common.api.person;
+package com.ecjtu.hht.booksmate.ms_oauth.login.service;
 
 import com.baomidou.mybatisplus.service.IService;
 import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
@@ -17,7 +17,7 @@ import java.util.Map;
  * @author hht
  * @since 2019-03-07
  */
-@FeignClient(name = "ms_psn")
+@FeignClient(name = "ms-psn")
 public interface IPersonService extends IService<Person> {
 
     /**

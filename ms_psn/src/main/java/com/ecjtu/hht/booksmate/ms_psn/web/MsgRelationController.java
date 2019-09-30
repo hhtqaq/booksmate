@@ -28,7 +28,7 @@ public class MsgRelationController {
 
     @GetMapping("/psn/message/tosend")
     public void sendMessageToFrd(@RequestParam("frdId") Integer frdId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = (Person) request.getSession().getAttribute("mapper/person");
         MsgRelation tempRelation=new MsgRelation();
         tempRelation.setSenderId(person.getId());
         tempRelation.setReceiveId(frdId);

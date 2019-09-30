@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.MsgRelationMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,status, sender_Id AS senderId, update_time AS updateTime,last_content as lastContent,receive_Id as receiveId
+    </sql>
+<select id="getAllMsgRelation" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.MsgRelation">
+    select <include refid="Base_Column_List"></include>
+    from msg_relation t where t.sender_Id=#{psnId} or t.receive_Id=#{psnId} and t.`status`=0 ORDER BY  t.update_time;
+</select>
+    <select id="getMsgrelationPsnId" resultType="java.lang.Integer">
+        select DISTINCT(b.id) from (SELECT t.receive_Id as id,update_time,last_content from msg_relation t where t.sender_Id=#{psnId} UNION all SELECT
+t.sender_Id,t.update_time,last_content from msg_relation t  where t.receive_Id=#{psnId})as b ORDER BY b.update_time desc;
+    </select>
+</mapper>

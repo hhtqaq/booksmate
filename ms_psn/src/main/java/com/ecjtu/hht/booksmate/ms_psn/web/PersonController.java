@@ -52,13 +52,13 @@ public class PersonController {
         @Autowired
         private IBorrowRegisterService borrowRegisterService;*/
     @Cacheable("psnInfo")
-    @GetMapping("/person/getPersonInfoById/{id}")
+    @GetMapping("/mapper/person/getPersonInfoById/{id}")
     public BookResult getPersonById(@PathVariable("id") String id) {
         Person person = personService.selectById(id);
         return person != null ? BookResult.ok(person) : BookResult.build(400, "不存在的会员id");
     }
 
-    @GetMapping("/person/all/{personstatus}")
+    @GetMapping("/mapper/person/all/{personstatus}")
     public ModelAndView getAllPerson(@PathVariable("personstatus") Integer status, ModelAndView modelAndView) {
         //正常
         List<Person> persons = personService.selectList(new EntityWrapper<Person>().eq("status", status));
@@ -78,7 +78,7 @@ public class PersonController {
      * @param modelAndView
      * @return
      */
-    @GetMapping("/person/{id}")
+    @GetMapping("/mapper/person/{id}")
     public ModelAndView getPersonById(@PathVariable("id") String id, ModelAndView modelAndView) {
         Person person = personService.selectById(id);
         modelAndView.addObject("person", person);
@@ -86,7 +86,7 @@ public class PersonController {
         return modelAndView;
     }
 
-    @GetMapping("/person/recharge/{id}/{money}")
+    @GetMapping("/mapper/person/recharge/{id}/{money}")
     public BookResult recharge(@PathVariable("id") Integer psnId, @PathVariable("money") Integer money) {
 
         Integer result = personService.recharge(psnId, money);
@@ -99,7 +99,7 @@ public class PersonController {
     public ModelAndView showHomePage(ModelAndView modelAndView, String psnId, HttpServletRequest request) {
 
         //获取自己主页
-        Person sessionPerson = (Person) request.getSession().getAttribute("person");
+        Person sessionPerson = (Person) request.getSession().getAttribute("mapper/person");
         Person person = personService.selectById(sessionPerson.getId());
         modelAndView.setViewName("front/homepage");
         //如果不为空且id不等于自己  代表再看他人页面
@@ -122,7 +122,7 @@ public class PersonController {
      * @param person
      * @return
      */
-    @GetMapping("/person/ajaxUpdatePersonInfo")
+    @GetMapping("/mapper/person/ajaxUpdatePersonInfo")
     public BookResult ajaxUpdatePersonInfo(Person person) {
         person.setUpdateDate(new Date());
         boolean b = personService.insertOrUpdate(person);
@@ -136,7 +136,7 @@ public class PersonController {
      * @param psnId
      * @return
      */
-    @PostMapping("/person/uploadAvatar/{psnId}")
+    @PostMapping("/mapper/person/uploadAvatar/{psnId}")
     public BookResult ajaxUploadPersonAvatar(HttpServletRequest request, @RequestParam("avatar") MultipartFile avatar, @PathVariable("psnId") Integer psnId) {
         if (avatar.isEmpty()) {
             return BookResult.build(500, "上传失败");
@@ -167,7 +167,7 @@ public class PersonController {
      * @param psnId
      * @return
      */
-    @GetMapping("/person/ajaxGetPersonDFBCount")
+    @GetMapping("/mapper/person/ajaxGetPersonDFBCount")
     public BookResult ajaxGetPersonDFBCount(Integer psnId) {
         Map<String, Integer> countMap;
         try {
@@ -185,7 +185,7 @@ public class PersonController {
      * @param psnIds
      * @return
      */
-    @GetMapping("/person/ajaxGetPersonsDFBCount")
+    @GetMapping("/mapper/person/ajaxGetPersonsDFBCount")
     public BookResult ajaxGetPersonsDFBCount(@RequestParam(value = "pIds[]") Integer[] psnIds) {
         List<Map<String, Integer>> maps;
         try {
@@ -232,5 +232,9 @@ public class PersonController {
     public ModelAndView toLogin(ModelAndView modelAndView, String username, String password) {
         modelAndView.setViewName("login");
         return modelAndView;
+    }
+    @GetMapping("/person/list")
+    public BookResult getAllPerson(){
+        return personService.getAllPerson();
     }
 }

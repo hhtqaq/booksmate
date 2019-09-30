@@ -1,10 +1,11 @@
 package com.ecjtu.hht.booksmate.ms_oauth.login.web;
 
-import com.ecjtu.hht.booksmate.common.util.BookResult;
+import com.ecjtu.hht.booksmate.common.api.person.IPersonService;
+import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
+import com.ecjtu.hht.booksmate.common.entity.person.Person;
 import com.ecjtu.hht.booksmate.common.util.CaptchaUtil;
-import com.ecjtu.hht.booksmate.common.util.entity.person.Person;
-import com.ecjtu.hht.booksmate.msoauth.login.service.LoginService;
-import com.ecjtu.hht.booksmate.msoauth.login.vo.LoginForm;
+import com.ecjtu.hht.booksmate.ms_oauth.login.service.LoginService;
+import com.ecjtu.hht.booksmate.ms_oauth.login.vo.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,8 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private LoginService loginService;
+    @Autowired
+    private IPersonService personService;
 
     /**
      * 用于生成带四位数字验证码的图片
@@ -62,7 +65,7 @@ public class LoginController {
      */
     @PostMapping(value = "/oauth/login")
     public BookResult login(HttpServletRequest request,
-                            HttpSession session, HttpServletResponse response, LoginForm loginForm) throws Exception {
+                            HttpSession session, LoginForm loginForm) {
         //验证验证码
         BookResult result = loginService.validateCode(loginForm.getValidateCode(), session);
         //如果验证通过
@@ -84,5 +87,10 @@ public class LoginController {
             request.getSession().removeAttribute("person");
         }
         response.sendRedirect("/");
+    }
+
+    @GetMapping("/oauth/list")
+    public BookResult getPersonList() {
+        return personService.getAllPerson();
     }
 }

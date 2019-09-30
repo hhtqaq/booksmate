@@ -59,7 +59,7 @@ public class PrivateLettersServiceImpl extends ServiceImpl<PrivateLettersMapper,
      * @param privateLetters
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void sendMessage(PrivateLetters privateLetters) {
         Date updateTime = new Date();
         //0未读
@@ -89,12 +89,12 @@ public class PrivateLettersServiceImpl extends ServiceImpl<PrivateLettersMapper,
         notice.setSenderPsn(privateLetters.getSenderPsnId());
         notice.setReceivePsn(privateLetters.getReceivePsnId());
         Notice notice1 = noticeMapper.selectOne(notice);
-        Map<String,Object> paramsMap=new HashMap<>();
-        if(content.length()>10){
-            content=content.substring(0,9);
+        Map<String, Object> paramsMap = new HashMap<>();
+        if (content.length() > 10) {
+            content = content.substring(0, 9);
         }
         paramsMap.put("content", content);
-        String msg= JacksonUtils.mapToJsonStr(paramsMap);
+        String msg = JacksonUtils.mapToJsonStr(paramsMap);
         //如果不为空代表曾经发送过 只需要修改状态
         if (notice1 != null) {
             notice1.setStatus(1);

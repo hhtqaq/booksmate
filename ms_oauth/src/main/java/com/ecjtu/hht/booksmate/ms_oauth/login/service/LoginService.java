@@ -1,7 +1,8 @@
 package com.ecjtu.hht.booksmate.ms_oauth.login.service;
 
 
-import com.ecjtu.hht.booksmate.common.util.BookResult;
+
+import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
 
 import javax.servlet.http.HttpSession;
 

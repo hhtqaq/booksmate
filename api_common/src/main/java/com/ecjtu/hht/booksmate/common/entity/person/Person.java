@@ -1,8 +1,10 @@
 package com.ecjtu.hht.booksmate.common.entity.person;
 
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +17,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class Person {
+public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,9 +1,10 @@
 package com.ecjtu.hht.booksmate.ms_oauth.login.service.impl;
 
-import com.ecjtu.hht.booksmate.common.util.BookResult;
+import com.ecjtu.hht.booksmate.common.api.person.IPersonService;
+import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
+import com.ecjtu.hht.booksmate.common.entity.person.Person;
 import com.ecjtu.hht.booksmate.common.util.SHAUtil;
-import com.ecjtu.hht.booksmate.common.util.entity.person.Person;
-import com.ecjtu.hht.booksmate.msoauth.login.service.LoginService;
+import com.ecjtu.hht.booksmate.ms_oauth.login.service.LoginService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,7 @@ public class LoginServiceImpl implements LoginService {
 
     Logger logger= LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private PersonMapper personMapper;
+    private IPersonService personService;
     /**
      * 验证验证码是否有效
      *
@@ -62,7 +62,8 @@ public class LoginServiceImpl implements LoginService {
             } catch (Exception e) {
                 logger.error("SHA加密失败",e);
             }
-            Person person = personMapper.doLogin(email, shapassword);
+
+            Person person = personService.checkPassword(email, shapassword);
             if(person!=null){
               return BookResult.ok(person);
             }else{

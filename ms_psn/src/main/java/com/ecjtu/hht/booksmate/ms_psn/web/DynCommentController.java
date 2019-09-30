@@ -27,7 +27,7 @@ public class DynCommentController {
      * 回复动态
      * @return
      */
-    @GetMapping("/person/dyn/reply")
+    @GetMapping("/mapper/person/dyn/reply")
     public BookResult replyDyn(DynComment comment){
         BookResult bookResult= null;
         try {
@@ -37,7 +37,7 @@ public class DynCommentController {
         }
         return bookResult;
     }
-    @GetMapping("/person/dyn/optCommentCount")
+    @GetMapping("/mapper/person/dyn/optCommentCount")
     public BookResult optCommentCount(Integer commentId,Integer type){
         BookResult bookResult= dynCommentService.optCommentCount(commentId,type);
         return bookResult;

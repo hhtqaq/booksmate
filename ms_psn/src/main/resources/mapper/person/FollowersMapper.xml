@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.FollowersMapper">
+
+    <!-- 开启二级缓存 -->
+<!--
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+-->
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, psn_id AS psnId, follower_id AS followerId, follow_time AS followTime, follow_status AS followStatus
+    </sql>
+
+    <select id="selectByPsnIdAndFrdId" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.Followers">
+    select <include refid="Base_Column_List" />
+        from followers where psn_id=#{psnId} and follower_id=#{frdId}
+    </select>
+
+    <select id="getAllFollowersId" resultType="java.lang.Integer">
+        select  follower_id from  followers where psn_id=#{psnId} and follow_status=1 order by follow_time desc;
+    </select>
+    <select id="getAllFolloweringId" resultType="java.lang.Integer">
+          select  psn_id from  followers where follower_id=#{psnId} and follow_status=1 order by follow_time desc;
+    </select>
+    <update id="updateFollowerStatus" parameterType="com.ecjtu.hht.booksmate.ms_psn.entity.Followers">
+        update followers set follow_status=#{followStatus} where psn_id=#{psnId} and follower_id=#{followerId}
+    </update>
+</mapper>

@@ -1,6 +1,7 @@
 package com.ecjtu.hht.booksmate.ms_psn.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.ecjtu.hht.booksmate.common.entity.common.BookResult;
 import com.ecjtu.hht.booksmate.common.entity.person.Person;
 import com.ecjtu.hht.booksmate.ms_psn.mapper.PersonMapper;
 import com.ecjtu.hht.booksmate.ms_psn.service.IDynamicService;
@@ -134,5 +135,24 @@ public class PersonServiceImpl extends ServiceImpl<PersonMapper, Person> impleme
     */
         return null;
     }
+
+    /**
+     * 检验登录密码
+     *
+     * @param email    邮箱
+     * @param password 密码
+     * @return
+     */
+    @Override
+    public Person checkPassword(String email, String password) {
+        return personMapper.doLogin(email, password);
+    }
+
+    @Override
+    public BookResult getAllPerson() {
+        List<Person> people = this.selectList(null);
+        return BookResult.ok(people);
+    }
+
 
 }

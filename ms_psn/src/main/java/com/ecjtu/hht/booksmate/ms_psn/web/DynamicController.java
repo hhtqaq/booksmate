@@ -89,7 +89,7 @@ public class DynamicController {
      *
      * @return
      */
-    @PostMapping("/person/dyn/fileupload")
+    @PostMapping("/mapper/person/dyn/fileupload")
     public Map<String, String> dynImageUpload(MultipartFile file) throws IOException {
         Map<String, String> map = new HashMap<>();
         //  dateDir ="2019/4/17"
@@ -111,7 +111,7 @@ public class DynamicController {
      *
      * @return
      */
-    @PostMapping("/person/dyn/post")
+    @PostMapping("/mapper/person/dyn/post")
     public void postDyn(ModelAndView modelAndView, HttpServletResponse response, Dynamic dynamic) throws IOException {
         dynamicService.postDyn(dynamic);
         response.sendRedirect("/psn/dyn/show");
@@ -121,7 +121,7 @@ public class DynamicController {
      * 加减点赞数  type=1 加  type=2 减
      * {dynId:dynId,type:type},
      */
-    @GetMapping("/person/dyn/optAwardCount")
+    @GetMapping("/mapper/person/dyn/optAwardCount")
     public BookResult optDynAwardCount(Integer dynId, Integer type){
         BookResult bookResult=dynamicService.optDynAwardCount(dynId,type);
         return bookResult;
@@ -133,7 +133,7 @@ public class DynamicController {
      * @param modelAndView
      * @return
      */
-    @GetMapping("/person/dyn/detail/{dynId}")
+    @GetMapping("/mapper/person/dyn/detail/{dynId}")
     public ModelAndView showDynDetail(@PathVariable("dynId")Integer dynId, ModelAndView modelAndView){
         DynamicVO dynamicVO= dynamicService.getDynDetailById(dynId);
        modelAndView.addObject("dynamicVO",dynamicVO);

@@ -29,7 +29,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+        <spring-cloud.version>Greenwich.SR2</spring-cloud.version>
         <commons-collections4.version>4.0</commons-collections4.version>
         <lombok.version>1.18.2</lombok.version>
         <jackson-databind.version>2.9.9</jackson-databind.version>
@@ -38,6 +38,7 @@
         <mybatis-plus-boot-starter.version>2.2.0</mybatis-plus-boot-starter.version>
         <freemarker.version>2.3.28</freemarker.version>
         <mysql.version>5.1.47</mysql.version>
+        <spring-cloud-component.version>2.1.2.RELEASE</spring-cloud-component.version>
     </properties>
     <build>
         <plugins>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.NoticeMapper">
+
+    <!-- 开启二级缓存
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,msg, type,status, sender_psn AS senderPsn, create_date AS createDate, update_date AS updateDate,receive_psn AS receivePsn
+    </sql>
+
+    <select id="selectAllNotice" resultType="com.ecjtu.hht.booksmate.ms_psn.entity.Notice">
+      select <include refid="Base_Column_List"></include> from notice where receive_psn=#{id} and status=1 order by update_date desc
+    </select>
+    <delete id="deleteAllNoticeByType">
+        delete from notice where receive_psn=#{id} and type=#{noticeType}
+    </delete>
+    <update id="updateNoticeStatus">
+        update notice set status=#{status},update_date=#{date} where id=#{noticeId}
+
+    </update>
+</mapper>

@@ -1,6 +1,7 @@
 package com.ecjtu.hht.booksmate.ms_psn.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.ecjtu.hht.booksmate.common.entity.person.Person;
 import com.ecjtu.hht.booksmate.ms_psn.entity.MsgRelation;
 import com.ecjtu.hht.booksmate.ms_psn.mapper.MsgRelationMapper;
 import com.ecjtu.hht.booksmate.ms_psn.service.IMsgRelationService;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ecjtu.hht.booksmate.ms_psn.mapper.PersonMapper">
+
+    <!-- 开启二级缓存 -->
+    <!--
+        <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+    -->
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, psn_name AS psnName, sex, age, department, tel, create_date AS createDate, email, update_date AS updateDate, hobby_books AS hobbyBooks, role,
+        brief,account,avatar,status,password
+    </sql>
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List_No_Pwd">
+        id, psn_name AS psnName, sex, age, department, tel, create_date AS createDate, email, update_date AS updateDate, hobby_books AS hobbyBooks, role,
+        brief,account,avatar,status
+    </sql>
+    <select id="doLogin" resultType="com.ecjtu.hht.booksmate.common.entity.person.Person">
+        select
+        <include refid="Base_Column_List_No_Pwd"></include>
+        from person where email=#{email} and password=#{shapassword}
+    </select>
+    <select id="getSimilarPersonByOther" resultType="com.ecjtu.hht.booksmate.common.entity.person.Person" >
+        select
+        <include refid="Base_Column_List_No_Pwd"></include> from person where id!=#{psnId}
+        <if test="person.hobbyBooks!=null and person.department!=null">
+          and  ( hobby_books like CONCAT('%',#{person.hobbyBooks},'%') or  department like CONCAT('%',#{person.department},'%') )
+        </if>
+        <if test="person.hobbyBooks!=null and person.department==null">
+            and ( hobby_books like CONCAT('%',#{person.hobbyBooks},'%'))
+        </if>
+        <if test="person.hobbyBooks==null and person.department!=null">
+            and ( department   like CONCAT('%',#{person.department},'%'))
+        </if>
+        limit 0,6
+    </select>
+    <select id="getMaxReadPsns" resultType="com.ecjtu.hht.booksmate.common.entity.person.Person" >
+        select
+        <include refid="Base_Column_List_No_Pwd"></include> from person where id!=#{psnId}
+    </select>
+    <select id="getPersonByEmail" resultType="com.ecjtu.hht.booksmate.common.entity.person.Person">
+        select    <include refid="Base_Column_List"></include> from person where email=#{email}
+    </select>
+</mapper>
